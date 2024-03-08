@@ -1,6 +1,6 @@
 package ma.codingArt.controller;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
 import ma.codingArt.dto.ProductDTO;
 import ma.codingArt.entity.Product;
 import ma.codingArt.service.ProductService;
@@ -24,37 +23,37 @@ import ma.codingArt.service.ProductService;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-	 @Autowired
-	    private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-	    @GetMapping
-	    public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
-	        Page<Product> products = productService.getAllProducts(pageable);
-	        return ResponseEntity.ok(products);
-	    }
+    @GetMapping("/all")
+    public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
+        Page<Product> products = productService.getAllProducts(pageable);
+        return ResponseEntity.ok(products);
+    }
 
-	    @GetMapping("/{id}")
-	    public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
-	        Product product = productService.getProductById(id);
-	        return ResponseEntity.ok(product);
-	    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok().body(product);
+    }
 
-	    @PostMapping
-	    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductDTO productDTO) {
-	        Product product = productService.createProduct(productDTO);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(product);
-	    }
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+        Product product = productService.createProduct(productDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
+    }
+    
 
-	    @PatchMapping("/{id}")
-	    public ResponseEntity<Product> updateProduct(@PathVariable UUID id, @RequestBody ProductDTO productDTO) {
-	        Product product = productService.updateProduct(id, productDTO);
-	        return ResponseEntity.ok(product);
-	    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable UUID id, @RequestBody ProductDTO productDTO) {
+        Product product = productService.updateProduct(id, productDTO);
+        return ResponseEntity.ok(product);
+    }
 
-	    @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
-	        productService.deleteProduct(id);
-	        return ResponseEntity.noContent().build();
-	    }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 }

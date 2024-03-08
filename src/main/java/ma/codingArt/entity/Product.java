@@ -2,7 +2,6 @@ package ma.codingArt.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Locale.Category;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -13,17 +12,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "products")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
    
@@ -38,7 +33,7 @@ public class Product {
    
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private ma.codingArt.entity.Category category; // Importez la classe Category correcte
    
     @Column(nullable = false)
     private BigDecimal price;
@@ -51,10 +46,4 @@ public class Product {
    
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled = true;
-
-	public void setCategory(ma.codingArt.entity.Category one) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

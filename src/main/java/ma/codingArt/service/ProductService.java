@@ -1,6 +1,6 @@
 package ma.codingArt.service;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import ma.codingArt.dto.ProductDTO;
+import ma.codingArt.entity.Category;
 import ma.codingArt.entity.Product;
 import ma.codingArt.repository.ProductRepository;
 import ma.codingArt.repository.CategoryRepository;
@@ -33,7 +34,10 @@ public class ProductService {
 	        Product product = new Product();
 	        product.setTitle(productDTO.getTitle());
 	        product.setDescription(productDTO.getDescription());
-	        product.setCategory(categoryRepository.getOne(productDTO.getCategoryId()));
+	        UUID categoryId = productDTO.getCategoryId();
+	        Category category = categoryRepository.findById(categoryId)
+	                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+	        product.setCategory(category);
 	        product.setPrice(productDTO.getPrice());
 	        return productRepository.save(product);
 	    }

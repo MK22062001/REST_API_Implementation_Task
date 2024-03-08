@@ -16,9 +16,9 @@ public class CategoryService {
 	@Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
+	public List<Category> getAllCategories() {
+	    return categoryRepository.findAll();
+	}
 
     public Category getCategoryById(UUID id) {
         return categoryRepository.findById(id)

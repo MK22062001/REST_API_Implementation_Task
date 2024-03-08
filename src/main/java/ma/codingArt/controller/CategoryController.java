@@ -1,10 +1,9 @@
 package ma.codingArt.controller;
 
+import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,21 +21,21 @@ import ma.codingArt.entity.Category;
 import ma.codingArt.service.CategoryService;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/categories")
 public class CategoryController {
 	@Autowired
     private CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<Page<Category>> getAllCategories() {
-        Page<Category> categories = (Page<Category>) categoryService.getAllCategories();
-        return ResponseEntity.ok(categories);
-    }
+	@GetMapping
+	public ResponseEntity<List<Category>> getAllCategories() {
+	    List<Category> categories = categoryService.getAllCategories();
+	    return ResponseEntity.ok(categories);
+	}
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable UUID id) {
         Category category = categoryService.getCategoryById(id);
-        return ResponseEntity.ok(category);
+        return ResponseEntity.ok().body(category);
     }
 
     @PostMapping
