@@ -52,4 +52,9 @@ public class Product {
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled = true;
 
+	public void setCategory(ma.codingArt.entity.Category one) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
